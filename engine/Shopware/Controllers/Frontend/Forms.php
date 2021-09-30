@@ -24,6 +24,7 @@
 
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\NonUniqueResultException;
+use Shopware\Bundle\CartBundle\CartKey;
 use Shopware\Bundle\StoreFrontBundle\Service\ContextServiceInterface;
 use Shopware\Components\Captcha\CaptchaValidator;
 use Shopware\Components\Model\ModelManager;
@@ -232,7 +233,7 @@ class Shopware_Controllers_Frontend_Forms extends Enlight_Controller_Action
                             $text = Shopware()->Snippets()->getNamespace('frontend/detail/comment')->get('InquiryTextBasket');
                             $getBasket = Shopware()->Modules()->Basket()->sGetBasket();
                             //$text = ''; Fix 100363 / 5416 Thanks to H. Ronecker
-                            foreach ($getBasket['content'] as $basketRow) {
+                            foreach ($getBasket[CartKey::POSITIONS] as $basketRow) {
                                 if (empty($basketRow['modus'])) {
                                     $text .= "\n{$basketRow['quantity']} x {$basketRow['articlename']} ({$basketRow['ordernumber']}) - {$basketRow['price']} " . Shopware()->System()->sCurrency['currency'];
                                 }
